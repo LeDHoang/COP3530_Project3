@@ -1,0 +1,5 @@
+C:\Users\provi\Desktop\Project3\Project3\x64\Debug\Project3.vcxproj.AssemblyReference.cache
+C:\Users\provi\Desktop\Project3\Project3\x64\Debug\Project3.vcxproj.SuggestedBindingRedirects.cache
+C:\Users\provi\Desktop\Project3\Project3\x64\Debug\Project3.FrontPage.resources
+C:\Users\provi\Desktop\Project3\Project3\x64\Debug\Project3.vcxproj.GenerateResource.cache
+C:\Users\provi\Desktop\Project3\Project3\x64\Debug\Project3.Frame2.resources

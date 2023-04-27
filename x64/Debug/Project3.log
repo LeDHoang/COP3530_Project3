@@ -1,0 +1,8 @@
+﻿  Frame2.cpp
+  FrontPage.cpp
+C:\Users\provi\Desktop\Project3\Project3\food2.h(264,1): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\provi\Desktop\Project3\Project3\food2.h(265,1): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\provi\Desktop\Project3\Project3\food2.h(266,1): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Generating Code...
+  food2.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  Project3.vcxproj -> C:\Users\provi\Desktop\Project3\x64\Debug\Project3.exe
