@@ -114,19 +114,20 @@ public:
     };
     /**The add function will go through every row in the Excel sheet and collect only the necessary data, add them to a new
     food object and return it.*/
-    void merge(cli::array<System::Collections::Generic::KeyValuePair<float, System::String^>>^ toMSort, int left, int mid, int right)
+    void merge(List<KeyValuePair<float, String^>>^ toMSort, int left, int mid, int right)
     {
         int n1 = mid - left + 1;
         int n2 = right - mid;
-        cli::array<System::Collections::Generic::KeyValuePair<float, System::String^>>^ X = gcnew cli::array<System::Collections::Generic::KeyValuePair<float, System::String^>>(n1);
-        cli::array<System::Collections::Generic::KeyValuePair<float, System::String^>>^ Y = gcnew cli::array<System::Collections::Generic::KeyValuePair<float, System::String^>>(n2);
+        List<KeyValuePair<float, String^>>^ X = gcnew List<KeyValuePair<float, String^>>(n1);
+        List<KeyValuePair<float, String^>>^ Y = gcnew List<KeyValuePair<float, String^>>(n2);
+
         for (int i = 0; i < n1; i++)
         {
-            X[i] = toMSort[left + i];
+            X->Add(toMSort[left + i]);
         }
         for (int j = 0; j < n2; j++)
         {
-            Y[j] = toMSort[mid + 1 + j];
+            Y->Add(toMSort[mid + 1 + j]);
         }
         int i = 0;
         int j = 0;
@@ -158,7 +159,8 @@ public:
             k++;
         }
     }
-    void mergeSort(cli::array<KeyValuePair<float, String^>, 1>^ toMSort, int left, int right)
+
+    void mergeSort(List<KeyValuePair<float, String^>>^ toMSort, int left, int right)
     {
         if (left < right)
         {
@@ -169,12 +171,13 @@ public:
         }
     }
 
+
     // Modified from Merge Sort code on page 89 of "6-Sorting" PowerPoint on Canvas.
-    void insertionSort(cli::array<System::Collections::Generic::KeyValuePair<float, System::String^>>^% toISort, int left, int right)
+    void insertionSort(List<KeyValuePair<float, String^>>^ toISort, int left, int right)
     {
         for (int i = left + 1; i < right; i++)
         {
-            System::Collections::Generic::KeyValuePair<float, System::String^> key = toISort[i];
+            KeyValuePair<float, String^> key = toISort[i];
             int j = i - 1;
             while (j > left && toISort[j].Key > key.Key)
             {
@@ -187,7 +190,7 @@ public:
     // Modified from Insertion Sort code on page 38 of "6-Sorting" PowerPoint on Canvas.
     // 
     //// LIST INSTEAD OF ARRAY??
-    void timSort(cli::array<System::Collections::Generic::KeyValuePair<float, System::String^>>^ toTSort, int max)
+    void timSort(List<KeyValuePair<float, String^>>^ toTSort, int max)
     {
         int run = 76;
         for (int i = 0; i < max; i += run)
@@ -325,11 +328,11 @@ public:
                 if (nutrient == "protein")
                 {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[0]->ToArray(), 0, table[0]->ToArray()->Length - 1);
+                    mergeSort(table[0], 0, table[0]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[0]->ToArray(), table[0]->ToArray()->Length - 1);
+                    timSort(table[0], table[0]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     /**For each nutrient, it will first sort the row of the table that contains that nutrient, first using Merge
@@ -374,11 +377,11 @@ public:
                 else if (nutrient == "carbs")
                 {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[1]->ToArray(), 0, table[1]->ToArray()->Length - 1);
+                    mergeSort(table[1], 0, table[1]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[1]->ToArray(), table[1]->ToArray()->Length - 1);
+                    timSort(table[1], table[1]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -409,13 +412,14 @@ public:
                         result += "Your daily consumption actually meets the recommended daily average for Carbohydrates. Keep up the good work!" + "\r\n\r\n";
                     }
                 }
+                
                 else if (nutrient == "sugar") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[2]->ToArray(), 0, table[2]->ToArray()->Length - 1);
+                    mergeSort(table[2], 0, table[2]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[2]->ToArray(), table[2]->ToArray()->Length - 1);
+                    timSort(table[2], table[2]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -448,11 +452,11 @@ public:
                 }
                 else if (nutrient == "fiber") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[3]->ToArray(), 0, table[3]->ToArray()->Length - 1);
+                    mergeSort(table[3], 0, table[3]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[3]->ToArray(), table[3]->ToArray()->Length - 1);
+                    timSort(table[3], table[3]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -485,11 +489,11 @@ public:
                 }
                 else if (nutrient == "fat") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[4]->ToArray(), 0, table[4]->ToArray()->Length - 1);
+                    mergeSort(table[4], 0, table[4]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[4]->ToArray(), table[4]->ToArray()->Length - 1);
+                    timSort(table[4], table[4]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -522,11 +526,11 @@ public:
                 }
                 else if (nutrient == "cholesterol") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[5]->ToArray(), 0, table[5]->ToArray()->Length - 1);
+                    mergeSort(table[5], 0, table[5]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[5]->ToArray(), table[5]->ToArray()->Length - 1);
+                    timSort(table[5], table[5]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -559,11 +563,11 @@ public:
                 }
                 else if (nutrient == "vitA") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[6]->ToArray(), 0, table[6]->ToArray()->Length - 1);
+                    mergeSort(table[6], 0, table[6]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[6]->ToArray(), table[6]->ToArray()->Length - 1);
+                    timSort(table[6], table[6]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -596,11 +600,11 @@ public:
                 }
                 else if (nutrient == "thiamin") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[7]->ToArray(), 0, table[7]->ToArray()->Length - 1);
+                    mergeSort(table[7], 0, table[7]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[7]->ToArray(), table[7]->ToArray()->Length - 1);
+                    timSort(table[7], table[7]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -633,11 +637,11 @@ public:
                 }
                 else if (nutrient == "riboflavin") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[8]->ToArray(), 0, table[8]->ToArray()->Length - 1);
+                    mergeSort(table[8], 0, table[8]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[8]->ToArray(), table[8]->ToArray()->Length - 1);
+                    timSort(table[8], table[8]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -670,11 +674,11 @@ public:
                 }
                 else if (nutrient == "niacin") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[9]->ToArray(), 0, table[9]->ToArray()->Length - 1);
+                    mergeSort(table[9], 0, table[9]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[9]->ToArray(), table[9]->ToArray()->Length - 1);
+                    timSort(table[9], table[9]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -707,11 +711,11 @@ public:
                 }
                 else if (nutrient == "vitB6") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[10]->ToArray(), 0, table[10]->ToArray()->Length - 1);
+                    mergeSort(table[10], 0, table[10]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[10]->ToArray(), table[10]->ToArray()->Length - 1);
+                    timSort(table[10], table[10]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -744,11 +748,11 @@ public:
                 }
                 else if (nutrient == "folate") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[11]->ToArray(), 0, table[11]->ToArray()->Length - 1);
+                    mergeSort(table[11], 0, table[11]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[11]->ToArray(), table[11]->ToArray()->Length - 1);
+                    timSort(table[11], table[11]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -781,11 +785,11 @@ public:
                 }
                 else if (nutrient == "choline") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[12]->ToArray(), 0, table[12]->ToArray()->Length - 1);
+                    mergeSort(table[12], 0, table[12]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[12]->ToArray(), table[12]->ToArray()->Length - 1);
+                    timSort(table[12], table[12]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -818,11 +822,11 @@ public:
                 }
                 else if (nutrient == "vitB12") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[13]->ToArray(), 0, table[13]->ToArray()->Length - 1);
+                    mergeSort(table[13], 0, table[13]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[13]->ToArray(), table[13]->ToArray()->Length - 1);
+                    timSort(table[13], table[13]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -855,11 +859,11 @@ public:
                 }
                 else if (nutrient == "vitC") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[14]->ToArray(), 0, table[14]->ToArray()->Length - 1);
+                    mergeSort(table[14], 0, table[14]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[14]->ToArray(), table[14]->ToArray()->Length - 1);
+                    timSort(table[14], table[14]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -892,11 +896,11 @@ public:
                 }
                 else if (nutrient == "vitD") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[15]->ToArray(), 0, table[15]->ToArray()->Length - 1);
+                    mergeSort(table[15], 0, table[15]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[15]->ToArray(), table[15]->ToArray()->Length - 1);
+                    timSort(table[15], table[15]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -929,11 +933,11 @@ public:
                 }
                 else if (nutrient == "vitE") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[16]->ToArray(), 0, table[16]->ToArray()->Length - 1);
+                    mergeSort(table[16], 0, table[16]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[16]->ToArray(), table[16]->ToArray()->Length - 1);
+                    timSort(table[16], table[16]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -966,11 +970,11 @@ public:
                 }
                 else if (nutrient == "vitK") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[17]->ToArray(), 0, table[17]->ToArray()->Length - 1);
+                    mergeSort(table[17], 0, table[17]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[17]->ToArray(), table[17]->ToArray()->Length - 1);
+                    timSort(table[17], table[17]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -1003,11 +1007,11 @@ public:
                 }
                 else if (nutrient == "calcium") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[18]->ToArray(), 0, table[18]->ToArray()->Length - 1);
+                    mergeSort(table[18], 0, table[18]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[18]->ToArray(), table[18]->ToArray()->Length - 1);
+                    timSort(table[18], table[18]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -1040,11 +1044,11 @@ public:
                 }
                 else if (nutrient == "phosphorus") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[19]->ToArray(), 0, table[19]->ToArray()->Length - 1);
+                    mergeSort(table[19], 0, table[19]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[19]->ToArray(), table[19]->ToArray()->Length - 1);
+                    timSort(table[19], table[19]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -1077,11 +1081,11 @@ public:
                 }
                 else if (nutrient == "magnesium") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[20]->ToArray(), 0, table[20]->ToArray()->Length - 1);
+                    mergeSort(table[20], 0, table[20]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[20]->ToArray(), table[20]->ToArray()->Length - 1);
+                    timSort(table[20], table[20]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -1114,11 +1118,11 @@ public:
                 }
                 else if (nutrient == "iron") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[21]->ToArray(), 0, table[21]->ToArray()->Length - 1);
+                    mergeSort(table[21], 0, table[21]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[21]->ToArray(), table[21]->ToArray()->Length - 1);
+                    timSort(table[21], table[21]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -1151,11 +1155,11 @@ public:
                 }
                 else if (nutrient == "zinc") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[22]->ToArray(), 0, table[22]->ToArray()->Length - 1);
+                    mergeSort(table[22], 0, table[22]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[22]->ToArray(), table[22]->ToArray()->Length - 1);
+                    timSort(table[22], table[22]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -1188,11 +1192,11 @@ public:
                 }
                 else if (nutrient == "copper") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[23]->ToArray(), 0, table[23]->ToArray()->Length - 1);
+                    mergeSort(table[23], 0, table[23]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[23]->ToArray(), table[23]->ToArray()->Length - 1);
+                    timSort(table[23], table[23]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -1225,11 +1229,11 @@ public:
                 }
                 else if (nutrient == "selenium") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[24]->ToArray(), 0, table[24]->ToArray()->Length - 1);
+                    mergeSort(table[24], 0, table[24]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[24]->ToArray(), table[24]->ToArray()->Length - 1);
+                    timSort(table[24], table[24]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -1262,11 +1266,11 @@ public:
                 }
                 else if (nutrient == "potassium") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[25]->ToArray(), 0, table[25]->ToArray()->Length - 1);
+                    mergeSort(table[25], 0, table[25]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[25]->ToArray(), table[25]->ToArray()->Length - 1);
+                    timSort(table[25], table[25]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
@@ -1299,11 +1303,11 @@ public:
                 }
                 else if (nutrient == "sodium") {
                     auto startM = std::chrono::high_resolution_clock::now();
-                    mergeSort(table[26]->ToArray(), 0, table[26]->ToArray()->Length - 1);
+                    mergeSort(table[26], 0, table[26]->Count - 1);
                     auto endM = std::chrono::high_resolution_clock::now();
                     auto durationM = std::chrono::duration_cast<std::chrono::milliseconds>(endM - startM);
                     auto startT = std::chrono::high_resolution_clock::now();
-                    timSort(table[26]->ToArray(), table[26]->ToArray()->Length - 1);
+                    timSort(table[26], table[26]->Count - 1);
                     auto endT = std::chrono::high_resolution_clock::now();
                     auto durationT = std::chrono::duration_cast<std::chrono::milliseconds>(endT - startT);
                     List<KeyValuePair<float, String^>>^ toPrint = gcnew List<KeyValuePair<float, String^>>();
